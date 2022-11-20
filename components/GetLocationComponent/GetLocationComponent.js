@@ -38,15 +38,20 @@ export default function GetLocationComponent() {
         }
     }
 
+    const b = React.useCallback(()=>setInterval(()=>{
+      getLocation();
+  }, 80))
+
+
+
     React.useEffect(()=>{
-       let b = setInterval(()=>{
-            getLocation();
-        }, 80);
+       
+      b();
         
-        if(stopTracking){
-            clearInterval(b);
-        }
-    }, [a, stopTracking])
+        // if(stopTracking){
+        //     clearInterval(b);
+        // }
+    }, [])
 
 
   return (
@@ -58,7 +63,10 @@ export default function GetLocationComponent() {
       <Text style={styles.speedTxt}> Скорость: {speed}</Text>
       <Text style={styles.dateTxt}> Время: {currTime}</Text>
       <Text style={styles.dateTxt}> Время: {sec}</Text>
-      <Button onPress={()=>setStopTracking(true)} title={"остановить трекинг"} ></Button>
+      <Button onPress={()=>
+        // setStopTracking(true)
+        clearInterval(b)
+        } title={"остановить трекинг"} ></Button>
     </View>
   );
 }
